@@ -20,5 +20,6 @@ packages=(
     vim
     tree
     python
+    ctags
 )
 brew install "${packages[@]}"
