@@ -22,7 +22,7 @@ sshkey() {
 
 main() {
    setupDevEnv
-   sshkey 
+#   sshkey 
 }
 
 main
