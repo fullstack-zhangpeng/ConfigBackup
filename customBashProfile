@@ -1,19 +1,40 @@
-#!/bin/bash
-
 #export
+
 export workspace="$HOME/Desktop/workspace"
 
+# fastlane 环境变量
+export PATH="$HOME/.fastlane/bin:$PATH"
+
+# 国内用户需要设置
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+# 国内用户需要设置
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+# flutter 环境变量
+export PATH=~/Desktop/workspace/Environment/flutter/bin:$PATH
+# Java
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk
+export PATH=$JAVA_HOME/Contents/Home/bin:$PATH
+# Android
+export ANDROID_HOME=~/Desktop/workspace/Environment/Android
+
 #alias
+
 alias cdhome='cd ~'
 alias cdroot='cd /'
 alias cdworkspace='cd $workspace'
 alias ip="ifconfig | grep 'inet' | grep -v '127.0.0.1' | grep -v 'inet6' | awk '{print \$2}'"
 alias lssize='du -sh ./* | sort -hr'
+alias relay='~/Desktop/workspace/Environment/relay.sh `curl -s http://localhost:17304/code/zhangpeng`'
+alias sshMyServer='ssh -i /Users/zhangpeng/Desktop/zhangpeng/keychain ubuntu@140.143.143.77'
 
 # history 命令时间格式
+
 HIST_STAMPS="yyyy-mm-dd"
 
 #Go
+export GOROOT="/usr/local/go"
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
 # Enable the go modules feature
 export GO111MODULE=auto
 # Set the GOPROXY environment variable
