@@ -1,39 +1,51 @@
 " ----- Vundle Config Start -----
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible
+filetype off
 
-" set the runtime path to include Vundle and initialize
+" 在此设置运行时路径
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin() " s
-" alternatively, pass a path where Vundle should install plugins
+" vundle初始化
+call vundle#begin()
+" 或者传递一个 Vundle 安装插件的路径
 "call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
+" 让 Vundle 管理 Vundle
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'L9'
-
+" 文件提示
+Plugin 'tpope/vim-fugitive'
 " 文件管理器
 Plugin 'scrooloose/nerdtree'
 " git 插件
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 " 文件缩略图
 Plugin 'majutsushi/tagbar'
-" 增强状态栏显示
-" Plugin 'Lokaltog/vim-powerline'
-" 自动补全
-" Plugin 'Valloric/YouCompleteMe'
-Plugin 'Valloric/YouCompleteMe',{'do':'python3 install.py --all'}
-" go语言插件
-Plugin 'fatih/vim-go'
-" 文件提示
-Plugin 'tpope/vim-fugitive'
-" Swift 支持
-Plugin 'bumaociyuan/vim-swift'
 " 文件头
-Bundle "nine2/vim-copyright"
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+" Bundle "nine2/vim-copyright"
+" go 插件
+Plugin 'fatih/vim-go'
+" 自动补全
+Plugin 'Valloric/YouCompleteMe'
+
+" 下面是不同支持幅度的例子
+" 保持 Plugin 命令 在 vundle#begin 和 end 之间
+" plugin 在 GitHub 仓库
+" Plugin 'tpope/vim-fugitive'
+" 来自http://vim-scripts.org/vim/scripts.html的插件
+" Plugin 'L9'
+" 未托管在GitHub上的Git插件
+" Plugin 'git://git.wincent.com/command-t.git'
+" 本地机器上的git软件库（即编写自己的插件时）
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" sparkup vim脚本在名为vim的该软件库子目录下。
+" 传递路径，合理设置运行时路径。
+" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" 安装 L9 并避免名称冲突
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+
+"每个插件都应该在这一行之前 
+call vundle#end()
+filetype plugin indent on
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -46,14 +58,17 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 " ----- Vundle Config End -----
-"
-"
+
 " ----- nerdtree Config Start -----
 " NERDTree config
-autocmd vimenter * NERDTree                                " open a NERDTree automatically when vim starts up
-autocmd StdinReadPre * let s:std_in=1                      " open a NERDTree automatically when vim starts up if no files were specified
-autocmd StdinReadPre * let s:std_in=1                      "open NERDTree automatically when vim starts up on opening a directory
-wincmd w                                                   " NERDTree 打开后的光标的位置到右侧编辑区
+" open a NERDTree automatically when vim starts up
+autocmd vimenter * NERDTree                               
+" open a NERDTree automatically when vim starts up if no files were specified
+autocmd StdinReadPre * let s:std_in=1                     
+"open NERDTree automatically when vim starts up on opening a directory
+autocmd StdinReadPre * let s:std_in=1                     
+" NERDTree 打开后的光标的位置到右侧编辑区
+wincmd w                                                  
 autocmd VimEnter * wincmd w
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
@@ -62,7 +77,56 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " 删除文件夹前的^G
 " let g:NERDTreeNodeDelimiter = "\u00a0"
 " ----- nerdtree Config End -----
-"
+
+" ----- nerdtree-git-plugin Config Start -----
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+" ----- nerdtree-git-plugin Config End -----
+
+" ----- YouCompleteMe Config Start -----
+set runtimepath+=~/.vim/bundle/YouCompleteMe
+" 离开插入模式后自动关闭预览窗口
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif    
+" 开启 YCM基于标签引擎
+let g:ycm_collect_identifiers_from_tags_files = 1          
+" 注释与字符串中的内容也用于补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:syntastic_ignore_files=[".*\.py$"]
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax = 1                 
+let g:ycm_complete_in_comments = 1
+" 关闭加载.ycm_extra_conf.py提示
+let g:ycm_confirm_extra_conf = 0                           
+" 映射按键,没有这个会拦截掉tab, 导致其他插件的tab不能用
+let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
+" 在注释输入中也能补全
+let g:ycm_complete_in_comments = 1                         
+" 在字符串输入中也能补全
+let g:ycm_complete_in_strings = 1                          
+" 注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+" 禁用语法检查
+"let g:ycm_show_diagnostics_ui = 0                          
+" 回车即选中当前项
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"            
+" 跳转到定义处
+nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>    
+" 从第2个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=2                
+" ----- YouCompleteMe Config End -----
+
 " ----- tagbar Config Start -----
 let g:tagbar_width=35
 let g:tagbar_autofocus=1
@@ -70,63 +134,63 @@ let g:tagbar_left = 1
 let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 nmap <F3> :TagbarToggle<CR>
 " ----- tagbar Config End -----
-"
-" ----- YouCompleteMe Config Start -----
-set runtimepath+=~/.vim/bundle/YouCompleteMe
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif     " 离开插入模式后自动关闭预览窗口
-let g:ycm_collect_identifiers_from_tags_files = 1           " 开启 YCM基于标签引擎
-let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释与字符串中的内容也用于补全
-let g:syntastic_ignore_files=[".*\.py$"]
-let g:ycm_seed_identifiers_with_syntax = 1                  " 语法关键字补全
-let g:ycm_complete_in_comments = 1
-let g:ycm_confirm_extra_conf = 0                            " 关闭加载.ycm_extra_conf.py提示
-let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']  " 映射按键,没有这个会拦截掉tab, 导致其他插件的tab不能用.
-let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
-let g:ycm_complete_in_comments = 1                          " 在注释输入中也能补全
-let g:ycm_complete_in_strings = 1                           " 在字符串输入中也能补全
-let g:ycm_collect_identifiers_from_comments_and_strings = 1 " 注释和字符串中的文字也会被收入补全
-let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-"let g:ycm_show_diagnostics_ui = 0                           " 禁用语法检查
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"             " 回车即选中当前项
-nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>     " 跳转到定义处
-let g:ycm_min_num_of_chars_for_completion=2                 " 从第2个键入字符就开始罗列匹配项
-" ----- YouCompleteMe Config Start -----
-"
+
 " ----- Vim Config Start -----
-autocmd! bufwritepost .vimrc source %                       " .vimrc修改之后自动加载Linux
-set helplang=cn                                             " 帮助系统设置为中文
-set showcmd                                                 " 在状态栏显示正在输入的命令 
-colorscheme molokai                                         " 配色
-syntax on                                                   " 开启语法高亮
-set autoread                                                " 文件修改后自动读入
-set number                                                  " 显示行号
-set tabstop=4                                               " 设置tab宽度 
-set softtabstop=4                                           " 统一缩进为4
-set shiftwidth=4                                            " 统一缩进为4
-set cursorline                                              " 突出显示当前行
-set backspace=2                                             " 设置 backspace 可以删除任意字符
-set ai                                                      " 自动缩进
-"set smartindent                                            " 开启新行时使用智能自动缩进
-set hls                                                     " 检索时高亮显示匹配项
-set ignorecase                                              " 检索时忽略大小写
-set incsearch                                               " 随着键入即时搜索
-set smartcase                                               " 有一个或以上大写字母时仍大小写敏感
-set paste                                                   " 贴时保持格式
-nnoremap <F6> :set nonumber!<CR>:set foldcolumn=0<CR>       " 为方便复制，用<F6>开启/关闭行号显示:
-set clipboard=unnamed                                       " 共享剪贴板  
-"set ruler                                                   " 打开状态栏标尺
-set confirm                                                 " 在处理未保存或只读文件的时候，弹出确认
-" 我的状态行显示的内容（包括文件类型和解码）
+" .vimrc修改之后自动加载Linux
+autocmd! bufwritepost .vimrc source %                      
+" 帮助系统设置为中文
+set helplang=cn                                            
+" 在状态栏显示正在输入的命令
+set showcmd                                                
+" 配色主题
+"colorscheme molokai                                       
+" 开启语法高亮
+syntax on
+" 文件修改后自动读入
+set autoread                                               
+" 显示行号
+set number
+" 设置tab宽度
+set tabstop=4
+" 统一缩进为4
+set softtabstop=4
+set shiftwidth=4                                           
+" 突出显示当前行
+set cursorline
+" 突出显示当前列
+set cursorcolumn                                             
+" 设置 backspace 可以删除任意字符
+set backspace=2                                            
+" 自动缩进
+set ai                                                     
+" 开启新行时使用智能自动缩进
+set smartindent                                            
+" 检索时高亮显示匹配项
+set hls                                                    
+" 检索时忽略大小写
+set ignorecase                                             
+" 随着键入即时搜索
+set incsearch                                              
+" 有一个或以上大写字母时仍大小写敏感
+set smartcase                                              
+" 贴时保持格式
+set paste                                                  
+" 为方便复制，用<F6>开启/关闭行号显示
+nnoremap <F6> :set nonumber!<CR>:set foldcolumn=0<CR>      
+" 共享剪贴板
+set clipboard=unnamed                                      
+" 打开状态栏标尺
+"set ruler                                                 
+" 在处理未保存或只读文件的时候，弹出确认
+set confirm                                                
+" 状态行显示的内容（包括文件类型和解码）
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
 " 总是显示状态行
 set laststatus=2
 " ----- Vim Config End -----
-
 " ----- Vim-copyright Config End -----
-let g:file_copyright_name = "zhangpeng"
-let g:file_copyright_email = "zhangpeng.0304@aliyun.com"
-let g:file_copyright_auto_filetypes = ['go']
+" let g:file_copyright_name = "zhangpeng"
+" let g:file_copyright_email = "zhangpeng.0304@aliyun.com"
+" let g:file_copyright_auto_filetypes = ['go']
 " ----- Vim-copyright Config End -----
-
-
