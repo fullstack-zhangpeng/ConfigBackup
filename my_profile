@@ -1,0 +1,33 @@
+#profile
+MY_PROFILE_PATH="$HOME/my_profile"
+
+alias profile.open="open ${MY_PROFILE_PATH}" 
+alias profile.source="source ${MY_PROFILE_PATH}"
+
+#alias
+alias cd.root='cd /'
+alias cd.home='cd ~'
+alias cd.desktop='cd $HOME/Desktop'
+
+alias ls.ip="ifconfig | grep 'inet' | grep -v '127.0.0.1' | grep -v 'inet6' | awk '{print \$2}'"
+alias ls.size='du -sh ./* | sort -hr'
+
+alias cp.pwd="pwd | pbcopy"
+alias cp.sshkey="cat ~/.ssh/id_rsa.pub | pbcopy"
+
+#function
+mkcd () {
+  mkdir -p $1 && cd "./$1"
+}
+
+prettyjson_s() {
+    echo "$1" | python3 -m json.tool
+}
+
+prettyjson_f() {
+    python3 -m json.tool "$1"
+}
+
+prettyjson_w() {
+    curl "$1" | python3 -m json.tool
+}
