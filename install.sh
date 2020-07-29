@@ -106,28 +106,29 @@ setup_ohmyzsh_plugins(){
 }
 
 main() {
-    argv0=$(echo "$0" | sed -e 's,\\,/,g')
-    # echo ${argv0}
-    work_path="$( cd "$( dirname "$argv0" )" && pwd )";
-    echo "当前工作目录为：${work_path}";
+    echo "install begin"
+    # argv0=$(echo "$0" | sed -e 's,\\,/,g')
+    # # echo ${argv0}
+    # work_path="$( cd "$( dirname "$argv0" )" && pwd )";
+    # echo "当前工作目录为：${work_path}";
 
-    # 设置命令行输出颜色
-    setup_color
+    # # 设置命令行输出颜色
+    # setup_color
 
-    # 安装 ohmyzsh
-    step 1 "安装 Oh my ZSH"
-    setup_ohmyzsh
+    # # 安装 ohmyzsh
+    # step 1 "安装 Oh my ZSH"
+    # setup_ohmyzsh
 
-    # 安装 ohmyzsh 插件
-    step 2 "安装 Oh my ZSH 插件"
-    setup_ohmyzsh_plugins
+    # # 安装 ohmyzsh 插件
+    # step 2 "安装 Oh my ZSH 插件"
+    # setup_ohmyzsh_plugins
 
-    step 3 "执行 .zshrc 文件"
-    source ~/.zshrc
+    # step 3 "执行 .zshrc 文件"
+    # source ~/.zshrc
 
-    success 脚本执行完毕
+    # success 脚本执行完毕
     
-    cd ${work_path}
+    # cd ${work_path}
 }
 
 main
