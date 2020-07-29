@@ -1,5 +1,4 @@
-# 告诉系统其后路径所指定的程序即是解释此脚本文件的 Shell 程序。
-#!/bin/bash
+#!/bin/sh
 
 command_exists() {
 	command -v "$@" >/dev/null 2>&1
