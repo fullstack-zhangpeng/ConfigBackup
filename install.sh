@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # command_exists() {
 # 	command -v "$@" >/dev/null 2>&1
@@ -88,6 +88,13 @@
 #     step 2.2 "检查是否已经存在 .zshrc 文件，有则备份"
 #     backup_old_ohmyzsh_config
 
+    # firstline=$(head -1 ~/.zshrc)
+    # if [[ $firstline != "source my_profile" ]];
+    # then
+    #     sed -i "" '1i\
+    #     source my_profile
+    #     ' ~/.zshrc
+    # fi
 #     step 2.3 "修改 .zshrc 文件，将插件填入对应位置"
 #     head='plugins=('
 #     # built-in plugins
