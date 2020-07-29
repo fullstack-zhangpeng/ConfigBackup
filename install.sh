@@ -104,6 +104,18 @@
 #     success "🎉🎉🎉 .zshrc modified!"
 # }
 
+# brew_install_plugins(){
+# 	packages=(
+#     	git
+#     	vim
+#     	python
+#         tree
+# 	)
+# 	brew install "${packages[@]}"
+
+#     echo "🎉🎉🎉 brew packages installed!"
+# }
+
 main() {
     echo "install begin"
     # argv0=$(echo "$0" | sed -e 's,\\,/,g')
